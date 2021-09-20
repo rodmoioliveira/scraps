@@ -82,4 +82,4 @@ data <- map(urls, fetch) %>%
   bind_rows() %>%
   mutate(across(everything(), str_trim))
 
-write_csv(data, file = "./data_formated/travessa.csv")
+write_csv(data, file = "./output/travessa.csv")
