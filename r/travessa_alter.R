@@ -8,7 +8,7 @@ data <- read_csv(
   "./output/travessa.csv",
   col_names = TRUE,
   show_col_types = FALSE
-  ) %>%
+) %>%
   as_tibble() %>%
   arrange(titulo, autores)
 

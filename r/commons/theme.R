@@ -65,4 +65,3 @@ my_theme <-
       size = 20
     ),
   )
-

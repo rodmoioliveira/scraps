@@ -5,10 +5,10 @@ source("./r/commons/utils.R")
 source("./r/commons/theme.R")
 
 urls <- read_csv(
-  "./inputs/travessa.csv",
+  "./input/travessa.csv",
   col_names = TRUE,
   show_col_types = FALSE
-  ) %>%
+) %>%
   as_tibble() %>%
   pluck(1)
 
@@ -67,11 +67,13 @@ fetch <- function(url) {
     pivot_wider(names_from = value...1, values_from = value...2) %>%
     bind_cols(c(autores, editora, categoria, sinopse, link)) %>%
     mutate_at(
-    c("titulo",
-      "titulo_original",
-      "segmento_especifico",
-      "colecao"),
-    str_to_sentence
+      c(
+        "titulo",
+        "titulo_original",
+        "segmento_especifico",
+        "colecao"
+      ),
+      str_to_sentence
     ) %>%
     mutate_at(c("titulo"), ~ gsub(" - .+", "", .x))
 
