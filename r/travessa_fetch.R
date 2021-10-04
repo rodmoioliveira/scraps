@@ -15,7 +15,6 @@ urls <- read_csv(
 fetch <- function(url) {
   print(glue("{url}"))
   html <- read_html(url)
-
   link <- tibble(link = url)
 
   categoria <- html %>%
@@ -31,9 +30,19 @@ fetch <- function(url) {
     str_split(": ") %>%
     unlist() %>%
     pluck(2) %>%
-    as_tibble() %>%
-    rename(autores = "value") %>%
-    mutate_at(c("autores"), ~ gsub(" .\\|.", ", ", .x))
+    as_tibble()
+
+  has_autores <- autores %>%
+    count() %>%
+    pluck(1) != 0
+
+  if (has_autores) {
+    autores <- autores %>%
+      rename(autores = "value") %>%
+      mutate_at(c("autores"), ~ gsub(" .\\|.", ", ", .x))
+  } else {
+    autores <- tibble_row(autores = "")
+  }
 
   editora <- html %>%
     html_element("#lblNomProdutor") %>%
